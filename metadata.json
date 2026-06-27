@@ -1,0 +1,8 @@
+{
+  "name": "Disha : Travel Planner",
+  "description": "An interactive, elegant single-page website for comprehensive travel planning featuring curated itineraries, dynamic packing lists, budget calculators, and an integrated travel chat widget.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
