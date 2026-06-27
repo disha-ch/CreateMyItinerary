@@ -77,7 +77,7 @@ export default function App() {
               <Plane className="w-4 h-4 -rotate-45" />
             </div>
             <div>
-              <span className="text-lg font-bold tracking-tight text-slate-900 block leading-tight">Vagabond AI</span>
+              <span className="text-lg font-bold tracking-tight text-slate-900 block leading-tight">CreateMyItinerary</span>
               <span className="text-[9px] text-slate-400 font-bold block font-mono tracking-widest uppercase">Travel System</span>
             </div>
           </div>
