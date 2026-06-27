@@ -29,7 +29,7 @@ export default function TravelChat({
     {
       id: 'welcome',
       sender: 'assistant',
-      text: "Hi there! 👋 I am **TripBot**, your live AI Travel Companion. I can help you outline itineraries, plan packing bags, or calculate budgets!\n\n**Hinglish is fully supported!** Feel free to chat in Hindi & English mixed (e.g. *\"Mera Goa ya Jaipur ka plan banao\"*).\n\nWhere are you heading today?",
+      text: "Hi there! 👋 I am **TripBot**, your live AI Travel Companion. I can help you outline itineraries, plan packing bags, or calculate budgets!\n\nWhere are you heading today?",
       timestamp: new Date()
     }
   ]);
@@ -91,7 +91,7 @@ export default function TravelChat({
               {
                 id: 'welcome',
                 sender: 'assistant',
-                text: `Hi there! 👋 I am **TripBot** (Session: **${sessionId}**). I'm connected to the Replit API and ready to outline itineraries, plan packing bags, or calculate budgets!\n\n**Hinglish is supported!** Ask me something like *\"Jaipur ke liye 3 days ka schedule chahiye\"*.`,
+                text: `Hi there! 👋 I am **TripBot** (Session: **${sessionId}**). I'm connected to the Replit API and ready to outline itineraries, plan packing bags, or calculate budgets!\n\nWhere are you heading today?`,
                 timestamp: new Date()
               }
             ]);
@@ -140,8 +140,8 @@ export default function TravelChat({
 
   // Clickable suggested prompts to help users test the chat easily
   const quickPrompts = [
-    { label: '🇮🇳 Jaipur Plan (Hinglish)', text: 'Jaipur ghumne ke liye ek mast 3-day plan batao' },
-    { label: '🏖️ Goa Budget (Hinglish)', text: 'Goa trip ka budget kaise kam karein?' },
+    { label: '🇮🇳 Jaipur 3-Day Plan', text: 'Can you outline a perfect 3-day itinerary for Jaipur, India?' },
+    { label: '🏖️ Goa Budget Tips', text: 'What are some great tips to optimize a budget trip to Goa?' },
     { label: '🌸 Japan Itinerary', text: 'Can you suggest a 5-day cherry blossom season itinerary in Japan?' },
     { label: '💶 Paris Budget Tips', text: 'How should I optimize my budget for an elegant 3-day Paris trip?' }
   ];
@@ -161,13 +161,15 @@ export default function TravelChat({
     setInputValue('');
     setIsTyping(true);
 
+    const systemInstruction = "\n\n(System Note for AI: The user requests professional, clear English only. Please reply strictly in English. Do not mix any Hindi or Hinglish words.)";
+
     try {
       const response = await fetch(`${apiUrl}/api/chat`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           session_id: sessionId,
-          message: textToSend.trim()
+          message: textToSend.trim() + systemInstruction
         })
       });
 
