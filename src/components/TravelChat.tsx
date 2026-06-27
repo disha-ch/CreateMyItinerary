@@ -29,7 +29,7 @@ export default function TravelChat({
     {
       id: 'welcome',
       sender: 'assistant',
-      text: "Hi there! 👋 I am **TripBot**, your live AI Travel Companion. I can help you outline itineraries, plan packing bags, or calculate budgets!\n\nWhere are you heading, or what would you like help with today?",
+      text: "Hi there! 👋 I am **TripBot**, your live AI Travel Companion. I can help you outline itineraries, plan packing bags, or calculate budgets!\n\n**Hinglish is fully supported!** Feel free to chat in Hindi & English mixed (e.g. *\"Mera Goa ya Jaipur ka plan banao\"*).\n\nWhere are you heading today?",
       timestamp: new Date()
     }
   ]);
@@ -37,10 +37,11 @@ export default function TravelChat({
   const [isTyping, setIsTyping] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   
-  // prompt_phone states
+  // Contact prompt states
   const [shouldPromptPhone, setShouldPromptPhone] = useState(false);
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [phoneSubmitted, setPhoneSubmitted] = useState(false);
+  const [contactEmail, setContactEmail] = useState('');
+  const [contactPhone, setContactPhone] = useState('');
+  const [contactSubmitted, setContactSubmitted] = useState(false);
   
   // conversation_ended state
   const [conversationEnded, setConversationEnded] = useState(false);
@@ -51,10 +52,14 @@ export default function TravelChat({
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
+  // Count user messages to automatically prompt for email and phone after 4 messages
+  const userMsgCount = messages.filter(m => m.sender === 'user').length;
+  const shouldShowContactPrompt = shouldPromptPhone || userMsgCount >= 4;
+
   // Auto-scroll to bottom of messages
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages, isTyping, shouldPromptPhone]);
+  }, [messages, isTyping, shouldShowContactPrompt]);
 
   // Synchronize history automatically on first open or when session ID changes
   useEffect(() => {
@@ -86,7 +91,7 @@ export default function TravelChat({
               {
                 id: 'welcome',
                 sender: 'assistant',
-                text: `Hi there! 👋 I am **TripBot** (Session: **${sessionId}**). I'm connected to the Replit API and ready to outline itineraries, plan packing bags, or calculate budgets!\n\nWhere are you heading, or what would you like help with today?`,
+                text: `Hi there! 👋 I am **TripBot** (Session: **${sessionId}**). I'm connected to the Replit API and ready to outline itineraries, plan packing bags, or calculate budgets!\n\n**Hinglish is supported!** Ask me something like *\"Jaipur ke liye 3 days ka schedule chahiye\"*.`,
                 timestamp: new Date()
               }
             ]);
@@ -119,8 +124,9 @@ export default function TravelChat({
           }
         ]);
         setShouldPromptPhone(false);
-        setPhoneSubmitted(false);
-        setPhoneNumber('');
+        setContactSubmitted(false);
+        setContactEmail('');
+        setContactPhone('');
         setConversationEnded(false);
       } else {
         throw new Error(`Failed to clear session on server: status ${res.status}`);
@@ -134,10 +140,10 @@ export default function TravelChat({
 
   // Clickable suggested prompts to help users test the chat easily
   const quickPrompts = [
+    { label: '🇮🇳 Jaipur Plan (Hinglish)', text: 'Jaipur ghumne ke liye ek mast 3-day plan batao' },
+    { label: '🏖️ Goa Budget (Hinglish)', text: 'Goa trip ka budget kaise kam karein?' },
     { label: '🌸 Japan Itinerary', text: 'Can you suggest a 5-day cherry blossom season itinerary in Japan?' },
-    { label: '💶 Paris Budget Tips', text: 'How should I optimize my budget for an elegant 3-day Paris trip?' },
-    { label: '🏔️ Hiking Gear', text: 'What are the absolute essential safety items to pack for mountain hiking?' },
-    { label: '🔒 Safety Tips', text: 'What are some practical tips for staying safe while traveling solo?' }
+    { label: '💶 Paris Budget Tips', text: 'How should I optimize my budget for an elegant 3-day Paris trip?' }
   ];
 
   const handleSendMessage = async (textToSend: string) => {
@@ -481,39 +487,48 @@ export default function TravelChat({
               </div>
             ))}
 
-            {/* Custom Interactive Prompt Phone contact card requested in API definitions */}
-            {shouldPromptPhone && (
+            {/* Custom Interactive Contact info form (Email + Phone number) */}
+            {shouldShowContactPrompt && (
               <div className="bg-gradient-to-br from-indigo-50 to-brand-50 border border-indigo-150 rounded-2xl p-4 space-y-3.5 shadow-xs max-w-[90%] mr-auto text-left">
                 <div className="flex items-start gap-2 text-indigo-900">
                   <Phone className="w-4.5 h-4.5 text-brand-600 shrink-0 mt-0.5 animate-bounce" />
                   <div>
-                    <h5 className="font-display font-black text-xs">Connect with a Local Expert?</h5>
+                    <h5 className="font-display font-black text-xs">Connect with a Travel Expert?</h5>
                     <p className="text-[11px] text-indigo-700 leading-normal mt-1 font-medium">
-                      TripBot noticed you are mapping out a great path! Would you like a live travel advisor to call you with discounted flight and lodging quotes?
+                      TripBot noticed you are planning an incredible journey! Please share your contact info so a live expert advisor can email and call you with discounted flight, lodging, and local itinerary quotes.
                     </p>
                   </div>
                 </div>
-                {phoneSubmitted ? (
+                {contactSubmitted ? (
                   <div className="bg-emerald-500/10 text-emerald-800 text-[10px] font-bold p-2.5 rounded-xl border border-emerald-200">
-                    ✓ Request received! A travel expert will contact you shortly.
+                    ✓ Thank you! A travel expert will email you at <strong>{contactEmail}</strong> and call you at <strong>{contactPhone}</strong> shortly.
                   </div>
                 ) : (
-                  <div className="flex gap-2">
+                  <div className="space-y-2">
                     <input
-                      type="tel"
-                      placeholder="Enter phone number..."
-                      value={phoneNumber}
-                      onChange={(e) => setPhoneNumber(e.target.value)}
-                      className="flex-1 px-3 py-1.5 border border-slate-200 rounded-xl text-xs bg-white focus:outline-none focus:ring-2 focus:ring-brand-500/20 font-semibold"
+                      type="email"
+                      placeholder="Enter your email address..."
+                      value={contactEmail}
+                      onChange={(e) => setContactEmail(e.target.value)}
+                      className="w-full px-3 py-1.5 border border-slate-200 rounded-xl text-xs bg-white focus:outline-none focus:ring-2 focus:ring-brand-500/20 font-semibold text-slate-800"
                     />
-                    <button
-                      onClick={() => {
-                        if (phoneNumber.trim()) setPhoneSubmitted(true);
-                      }}
-                      className="bg-brand-600 hover:bg-brand-700 text-white text-[10px] font-black px-4 py-1.5 rounded-xl transition-all cursor-pointer"
-                    >
-                      Request Call
-                    </button>
+                    <div className="flex gap-2">
+                      <input
+                        type="tel"
+                        placeholder="Enter your phone number..."
+                        value={contactPhone}
+                        onChange={(e) => setContactPhone(e.target.value)}
+                        className="flex-1 px-3 py-1.5 border border-slate-200 rounded-xl text-xs bg-white focus:outline-none focus:ring-2 focus:ring-brand-500/20 font-semibold text-slate-800"
+                      />
+                      <button
+                        onClick={() => {
+                          if (contactEmail.trim() && contactPhone.trim()) setContactSubmitted(true);
+                        }}
+                        className="bg-brand-600 hover:bg-brand-700 text-white text-[10px] font-black px-4 py-1.5 rounded-xl transition-all cursor-pointer"
+                      >
+                        Submit
+                      </button>
+                    </div>
                   </div>
                 )}
               </div>

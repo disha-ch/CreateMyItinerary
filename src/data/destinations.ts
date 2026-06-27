@@ -85,5 +85,56 @@ export const DESTINATIONS: Destination[] = [
       { day: 2, title: 'Golden Pavilion & Zen Gardens', details: 'Visit the shimmering Golden Pavilion (Kinkaku-ji) reflecting on a mirror pond, followed by silent meditation at Ryoan-ji rock garden.' },
       { day: 3, title: 'Bamboo Grove & Geisha Districts', details: 'Stroll through Arashiyama’s towering green bamboo forest, and cap off your trip searching for geishas in the lantern-lit alleys of Gion.' }
     ]
+  },
+  {
+    id: 'jaipur',
+    name: 'Jaipur',
+    country: 'India',
+    description: 'The legendary "Pink City" of Rajasthan, famous for its royal forts, magnificent palaces, vibrant chaotic bazaars, and opulent heritage hospitality.',
+    image: 'https://images.unsplash.com/photo-1477584305590-38772bf2542f?auto=format&fit=crop&w=800&q=80',
+    bestTime: 'October to March (Pleasantly cool winter weather)',
+    budgetLevel: 'Low',
+    rating: 4.8,
+    tags: ['Royalty', 'Heritage', 'Culture', 'Shopping'],
+    mustSee: ['Hawa Mahal', 'Amber Fort', 'City Palace', 'Jantar Mantar', 'Chokhi Dhani'],
+    suggestedItinerary: [
+      { day: 1, title: 'Hawa Mahal & City Palace', details: 'Marvel at the honeycombed pink sandstone windows of Hawa Mahal (Palace of Winds), then take a royal guided tour of the Maharaja’s active residence.' },
+      { day: 2, title: 'Amer Fort Elephant Ridges', details: 'Drive to the majestic hill fortress of Amber, admire the intricate mirrored ceilings of Sheesh Mahal, and enjoy panoramic views of Maota Lake.' },
+      { day: 3, title: 'Johari Bazaar Shopping & Chokhi Dhani', details: 'Shop for handcrafted blue pottery, block-printed textiles, and silver jewelry, finishing with a vibrant cultural feast at Chokhi Dhani ethnic village.' }
+    ]
+  },
+  {
+    id: 'goa',
+    name: 'Goa',
+    country: 'India',
+    description: 'India’s pocket-sized paradise, famed for its sun-kissed tropical sandy beaches, historic Portuguese cathedrals, spicy seafood, and laidback "Sussegad" lifestyle.',
+    image: 'https://images.unsplash.com/photo-1512480133898-23219ee7fe4f?auto=format&fit=crop&w=800&q=80',
+    bestTime: 'November to February (Cool ocean breezes & festive parties)',
+    budgetLevel: 'Low',
+    rating: 4.7,
+    tags: ['Beaches', 'Relax', 'Seafood', 'Heritage'],
+    mustSee: ['Baga Beach', 'Basilica of Bom Jesus', 'Dudhsagar Falls', 'Anjuna Flea Market', 'Latin Quarter (Fontainhas)'],
+    suggestedItinerary: [
+      { day: 1, title: 'North Goa Beaches & Sunsets', details: 'Sip fresh coconut water on the soft sands of Anjuna or Vagator Beach, explore historic Chapora Fort, and enjoy a lively beach shack dinner with live music.' },
+      { day: 2, title: 'Old Goa Portuguese Churches & Fontainhas', details: 'Visit the world-heritage Basilica of Bom Jesus, then stroll through the bright colorful European alleys of Fontainhas Latin Quarter in Panaji.' },
+      { day: 3, title: 'Spice Plantation & Dudhsagar Waterfalls', details: 'Take a jeep safari to the spectacular four-tiered Dudhsagar Falls, followed by an organic spice farm walk with a traditional Goan buffet.' }
+    ]
+  },
+  {
+    id: 'kerala',
+    name: 'Kerala Backwaters',
+    country: 'India',
+    description: 'Famed as "God’s Own Country", Kerala is a tropical paradise of serene green palm-fringed backwaters, traditional houseboats, spices, and healing Ayurveda retreats.',
+    image: 'https://images.unsplash.com/photo-1593693397690-362cb9666fc2?auto=format&fit=crop&w=800&q=80',
+    bestTime: 'September to March (Comfortable humidity & lush scenery)',
+    budgetLevel: 'Medium',
+    rating: 4.9,
+    tags: ['Nature', 'Relax', 'Ayurveda', 'Scenic'],
+    mustSee: ['Alleppey Houseboat', 'Munnar Tea Hills', 'Varkala Cliffs', 'Eravikulam National Park', 'Fort Kochi'],
+    suggestedItinerary: [
+      { day: 1, title: 'Tea Plantations of Munnar', details: 'Drive through rolling emerald green hills, learn how tea leaves are processed at Lockhart Museum, and watch sunset at Echo Point.' },
+      { day: 2, title: 'Overnight Alleppey Houseboat Cruise', details: 'Board a traditional "Kettuvallam" wooden houseboat, glide past quiet lagoons, coconut groves, and rural villages while chef prepares local fish curry.' },
+      { day: 3, title: 'Fort Kochi Colonial Walk & Kathakali', details: 'See the giant Chinese Fishing Nets, explore historic St. Francis Church, and attend an enchanting evening of traditional Kathakali classical dance.' }
+    ]
   }
 ];
